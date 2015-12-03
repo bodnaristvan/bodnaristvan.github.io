@@ -1,0 +1,89 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="upcoming-numbers-display">
+  <template>
+    <style>
+      :host {
+        display: block;
+        background-color: #1f2328;
+        width: 11vw;
+        height: 10vh;
+        padding: 13px;
+        position: absolute;
+        top: 17vh;
+        right: 4.5vh;
+        transform: rotate(0.007turn);
+        color: #fb006d;
+        font-size: 2em;
+      }
+      :host ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <div>
+      <ul>
+        <template is="dom-repeat" items="{{numbers}}">
+          <li>{{item.num}} &nbsp; {{item.gate}}</li>
+        </template>
+      </ul>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'upcoming-numbers-display',
+
+      properties: {
+        numbers: {
+          type: Array,
+          value: [],
+          notify: true
+        }
+      },
+
+      ready: function () {
+        for (var i = 0; i < 2; i++) {
+          this._prepend({num: this._rand(), gate: this._rand(1, 15)});
+        }
+        this._addItem();
+      },
+
+      _rand: function (min, max) {
+        min = min || 1000;
+        max = max || 10000;
+        var retval = Math.floor(min + Math.random() * (max - min));
+        if (retval === this.excludeNumber) {
+          retval = retval - 1;
+        }
+        return retval;
+      },
+
+      _addItem: function () {
+        this._prepend({num: this._rand(), gate: this._rand(1, 15)});
+        window.setTimeout(this._addItem.bind(this), this._rand(2000));
+      },
+
+      _prepend: function (num) {
+        this.numbers.unshift(num);
+        this.numbers = this.numbers.slice(0, 3);
+      }
+    });
+    
+    
+  })();
+  </script>
+</dom-module>

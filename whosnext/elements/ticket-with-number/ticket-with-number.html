@@ -1,0 +1,62 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="ticket-with-number">
+  <template>
+    <style>
+      :host {
+        display: block;
+        opacity: 0;
+        background-color: white;
+        border: 1px solid blue;
+        padding: 2em;
+        position: absolute;
+        bottom: 10vh;
+        left: 35vw;
+        width: 10vw;
+        height: 10vh;
+
+        -webkit-transition: opacity 1s;
+        transition: opacity 1s;
+      }
+      :host.show {
+        opacity: 1;
+      }
+    </style>
+    <div>Your ticket number is <span>{{ticketNumber}}</span></div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'ticket-with-number',
+
+      properties: {
+        ticketNumber: {
+          type: Number,
+          // value: 234,
+          notify: true,
+          observer: '_numberChanged'
+        }
+      },
+      _numberChanged: function (newValue, oldValue) {
+        if (!oldValue) {
+          this.classList.add('show');
+        } else {
+          // this.style.
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

@@ -1,0 +1,1 @@
+!function(e){"use strict";var n=e.querySelector("#app");n.displayInstalledToast=function(){e.querySelector("platinum-sw-cache").disabled||e.querySelector("#caching-complete").show()},n.addEventListener("dom-change",function(){}),window.addEventListener("WebComponentsReady",function(){window.setTimeout(function(){n.num=Math.floor(1e3*Math.random()+1e3)},2e3)})}(document);
