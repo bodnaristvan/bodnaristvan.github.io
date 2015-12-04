@@ -15,27 +15,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
-        background-color: #1f2328;
-        width: 11vw;
-        height: 10vh;
-        padding: 13px;
         position: absolute;
-        top: 17vh;
-        right: 4.5vh;
-        transform: rotate(0.007turn);
+        top: 236px;
+        right: 252px;
+        transform: rotate(0.006turn);
         color: #fb006d;
-        font-size: 2em;
+        font-size: 1.6em;
+        text-shadow: 0.5px 0.5px 0.5px rgba(255, 193, 221, 1);
       }
       :host ul {
         list-style-type: none;
         margin: 0;
         padding: 0;
       }
+      :host ul li {
+        margin-bottom: 40px;
+      }
     </style>
     <div>
       <ul>
         <template is="dom-repeat" items="{{numbers}}">
-          <li>{{item.num}} &nbsp; {{item.gate}}</li>
+          <li>{{item.num}}&nbsp; {{item.gate}}</li>
         </template>
       </ul>
     </div>
@@ -43,6 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
+    var numbersToShow = 2;
 
     Polymer({
       is: 'upcoming-numbers-display',
@@ -56,10 +57,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function () {
-        for (var i = 0; i < 2; i++) {
-          this._prepend({num: this._rand(), gate: this._rand(1, 15)});
+        for (var i = 0; i < numbersToShow; i++) {
+          this._prepend({num: this._rand(), gate: this._rand(1, 9)});
         }
-        this._addItem();
+        window.setTimeout(this._addItem.bind(this), this._rand(3000));
       },
 
       _rand: function (min, max) {
@@ -73,13 +74,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _addItem: function () {
-        this._prepend({num: this._rand(), gate: this._rand(1, 15)});
-        window.setTimeout(this._addItem.bind(this), this._rand(2000));
+        new Audio('../../images/office-scene/ding.mp3').play();
+        this._prepend({num: this._rand(), gate: this._rand(1, 9)});
+        window.setTimeout(this._addItem.bind(this), this._rand(8000, 15000));
       },
 
       _prepend: function (num) {
         this.numbers.unshift(num);
-        this.numbers = this.numbers.slice(0, 3);
+        this.numbers = this.numbers.slice(0, numbersToShow);
       }
     });
     

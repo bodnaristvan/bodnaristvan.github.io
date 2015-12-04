@@ -15,24 +15,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
-        opacity: 0;
-        background-color: white;
-        border: 1px solid blue;
-        padding: 2em;
         position: absolute;
-        bottom: 10vh;
+        bottom: -432px;
         left: 35vw;
-        width: 10vw;
-        height: 10vh;
+        width: 285px;
+        height: 432px;
 
-        -webkit-transition: opacity 1s;
-        transition: opacity 1s;
+        -webkit-transition: bottom 1s;
+        transition: bottom 1s;
       }
       :host.show {
-        opacity: 1;
+        bottom: 50px;
+      }
+
+      :host .ticket {
+        display: block;
+        border: 1px solid blue;
+        position: absolute;
+        background-image: url(../../images/ticket-empty.jpg);
+        width: 285px;
+        height: 432px;
+        background-size: 100% 100%;
+      }
+      :host .number {
+        font-size: 5.3em;
+        font-weight: bold;
+        margin-top: 190px;
+        display: block;
+        margin-left: 36px;
+        text-shadow: 1px 2px 15px rgba(150, 150, 150, 0.98);
+        color: #353535;
+      }
+      :host .hand {
+        background-image: url(../../images/hand.png);
+        background-size: 100% 100%;
+        width: 1200px;
+        height: 800px;
+        margin-left: -497px;
+        margin-top: -32px;
+        position: absolute;
       }
     </style>
-    <div>Your ticket number is <span>{{ticketNumber}}</span></div>
+    <div class="ticket">
+      <div class="number">{{ticketNumber}}</div>
+    </div>
+    <div class="hand"></div>
   </template>
   <script>
   (function() {

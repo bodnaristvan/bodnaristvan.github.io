@@ -1,1 +1,1 @@
-body{background:#fafafa;font-family:Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;color:#333}
+#scene,#viewport{width:1024px;overflow:hidden}body{background:#fafafa;font-family:Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;color:#333}#viewport{height:820px;margin:50px auto 10px}#scene{height:1200px;position:relative;top:0;-webkit-transition:1s top;transition:1s top}#scene.lookdown{top:-380px}
