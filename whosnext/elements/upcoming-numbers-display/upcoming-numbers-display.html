@@ -74,7 +74,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _addItem: function () {
-        new Audio('../../images/office-scene/ding.mp3').play();
+        new Audio('images/office-scene/ding.mp3').play();
         this._prepend({num: this._rand(), gate: this._rand(1, 9)});
         window.setTimeout(this._addItem.bind(this), this._rand(8000, 15000));
       },
