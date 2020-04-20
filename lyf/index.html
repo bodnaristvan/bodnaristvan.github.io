@@ -1,0 +1,208 @@
+<html>
+	<head>
+		<title>mess/life</title>
+		<style media="screen">
+			body {
+				text-align: center;
+			}
+			#board {
+				font-size: 8px;
+				overflow: scroll;
+				border: 1px solid black;
+				margin: 2em auto;
+				display: grid;
+				grid-auto-rows = 1fr;
+				column-gap: 1px;
+			  row-gap: 1px;
+				background-color: #ddd;
+				width: 768px; /* 5x128px */
+				height: 768px;
+			}
+			#board div {
+				background-color: white;
+				text-align: center;
+			}
+			#board div.living {
+				background-color: black;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+
+		<button type="button" id="button">start / stop</button>
+		<button type="button" id="resetbutton">random</button>
+		OR
+		<input value="write text here" id="textinput" />
+		<canvas width="128" id="drawingcanvas" style="display: none;"></canvas>
+		<button type="button" id="textdraw">draw text</button>
+
+		<div id="board"></div>
+
+		<script type="text/javascript">
+			// board setup
+			const boardSize = 128;
+			const cellCount = boardSize * boardSize;
+
+			const boardE = document.getElementById('board');
+			boardE.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
+
+			// oscillators
+			// let living = [[1, 1], [1, 2], [1, 3], [3, 6], [4, 6], [5, 6], [4, 7], [5, 7], [6, 7]];
+
+			// glider
+			// let living = [
+			// 	[2, 2],
+			// 	[3, 3],
+			// 	[1, 4], [2, 4], [3, 4]
+			// ];
+
+			// r-pentomino
+			// let living = [
+			// 	[2, 1], [3, 1],
+			// 	[1, 2], [2, 2],
+			// 	[2, 3]
+			// ];
+
+			// randomized
+			let living = Array(5500).fill([]).map(a => [Math.floor(Math.random() * boardSize), Math.floor(Math.random() * boardSize)]);
+
+			// matrix for the board with living cells
+			let livingBoard = Array(boardSize).fill(0).map(x => Array(boardSize).fill(false));
+			living.forEach(function (a) {
+				livingBoard[a[0]][a[1]] = true;
+			});
+
+			let interv;
+			let stepCount = 0;
+
+			function text2array(txt) {
+			  let i,
+			    data32,
+			    ctx = document.getElementById('drawingcanvas').getContext('2d'),
+			    inp = document.getElementById('textinput'),
+			    w = ctx.canvas.width,
+			    h = ctx.canvas.height,
+			    text = txt.replace(/\s/ig, "\n").toUpperCase(),
+			    lines = text.split("\n"),
+			    lineHeight = 20;
+
+				// draw text on canvas
+			  ctx.fillStyle = "rgb(0, 0, 0)";
+			  ctx.clearRect(0, 0, w, h);
+			  ctx.font = '20px sans-serif';
+			  for (var k = 0; k < lines.length; k++ ) {
+			    ctx.fillText(lines[k], 3, lineHeight + (k * lineHeight), boardSize);
+			  }
+			  data32 = new Uint32Array(ctx.getImageData(0, 0, w, h).data.buffer);
+
+				// get pixels with filled pixels
+			  return data32.reduce((acc, p, i) => {
+			    if (p & 0xff000000) {
+			      acc.push([(i % w), ((i / w)|0)]);
+			    }
+			    return acc;
+			  }, []);
+			}
+
+			function draw() {
+				boardE.innerHTML = '';
+				for (var i = 0; i < cellCount; i++) {
+					boardE.appendChild(document.createElement('div'));
+				}
+			}
+
+			function toggleLiving() {
+				const children = boardE.childNodes;
+				const removeClass = (e) => e.className = '';
+				const addClass = (n) => children[n].className = 'living';
+
+				// purge living cells from board
+				document.querySelectorAll('.living').forEach(removeClass);
+				// add living class to each living cell
+				living.map(a => (a[0] + (a[1] * boardSize))).forEach(addClass);
+			}
+
+			function getLivingNeighbourCount(x, y) {
+				const neighbours = [];
+				for (var i = -1; i <= 1; i++) {
+					for (var n = -1; n <= 1; n++) {
+						const _x = x + n;
+						const _y = y + i;
+						if (
+							!(_x === x && _y === y) &&
+							(_x >= 0 && _x < boardSize) &&
+							(_y >= 0 && _y < boardSize) &&
+							livingBoard[_x][_y]
+						) {
+							neighbours.push([_x, _y]);
+						}
+					}
+				}
+				// console.log(`neighbors for ${x},${y} are`, neighbours);
+				return neighbours.length;
+			}
+
+			document.getElementById('resetbutton').onclick = function resetBoard(e) {
+				living = Array(5500).fill([]).map(a => [Math.floor(Math.random() * boardSize), Math.floor(Math.random() * boardSize)]);
+ 				livingBoard = Array(boardSize).fill(0).map(x => Array(boardSize).fill(false));
+				living.forEach(function (a) {
+					livingBoard[a[0]][a[1]] = true;
+				});
+				toggleLiving();
+				e.stopPropagation();
+				e.preventDefault();
+			}
+
+			document.getElementById('button').onclick = function toggleSimulation(e) {
+				if (interv) {
+					window.clearInterval(interv);
+					interv = null;
+				} else {
+					interv = window.setInterval(function () {
+						let newliving = [];
+						for (var b = 0; b < cellCount; b++) {
+							const n = (b % boardSize);
+							const i = (b / boardSize) | 0;
+							const neighbours = getLivingNeighbourCount(n, i);
+							if (
+								(livingBoard[n][i] && (neighbours == 2 || neighbours == 3)) ||
+								(!livingBoard[n][i] && neighbours == 3)
+							) {
+								newliving.push([n, i]);
+							}
+						}
+						living = newliving;
+						livingBoard = Array(boardSize).fill(0).map(x => Array(boardSize).fill(false));
+						living.forEach(function (a) {
+							livingBoard[a[0]][a[1]] = true;
+						});
+						stepCount++;
+						// maybe throttle?
+						if (stepCount % 1 === 0) {
+							toggleLiving();
+						}
+					}, 100);
+				}
+				e.stopPropagation();
+				e.preventDefault();
+			}
+
+			document.getElementById('textdraw').onclick = function drawTextToBoard(e) {
+				living = text2array(document.getElementById('textinput').value);
+				livingBoard = Array(boardSize).fill(0).map(x => Array(boardSize).fill(false));
+				living.forEach(function (a) {
+					livingBoard[a[0]][a[1]] = true;
+				});
+				toggleLiving();
+				e.stopPropagation();
+				e.preventDefault();
+			}
+
+			// DO IT
+			draw();
+			toggleLiving();
+
+		</script>
+	</body>
+</html>
