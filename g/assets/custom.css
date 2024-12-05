@@ -35,3 +35,8 @@ article .description {
     font-family: "American Typewriter";
     line-height: 1.8em;
 }
+@media (prefers-color-scheme: dark) {
+    article .description {
+        color: rgb(160, 160, 160);
+    }
+}

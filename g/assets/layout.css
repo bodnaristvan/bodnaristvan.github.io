@@ -11,6 +11,13 @@ body {
     font-family: system-ui;
 }
 
+@media (prefers-color-scheme: dark) {
+    body {
+      color: #eee;
+      background: #171616;
+    }
+}
+
 header.page-header {
     scroll-snap-align: start;
     /* height: 20svh; */
@@ -120,6 +127,10 @@ section.index {
         box-sizing: border-box;
     }
     
+    .separator {
+        text-align: center;
+        color: #363636;
+    }
 }
 
 /* full screen button */
@@ -130,6 +141,12 @@ section.index {
     opacity: 0.5;
 }
 :-webkit-full-screen {
+    #fs-button {
+        display: none;
+    }
+}
+/* disable button on ios safari, because it doesn't work */
+@supports (-webkit-touch-callout: none) {
     #fs-button {
         display: none;
     }
