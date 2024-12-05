@@ -3,7 +3,7 @@ html.verticalsnapping {
     scroll-snap-type: y proximity;
     overflow-y: scroll;
     scroll-snap-align: center;
-    /* height: 100lvh; */
+    /* height: 100vh; */
 }
 body {
     margin: 0;
@@ -150,4 +150,17 @@ section.index {
     #fs-button {
         display: none;
     }
+}
+
+/* hide scrollbars */
+section::-webkit-scrollbar {
+    -webkit-appearance: none;
+    display: none;
+    width: 0;
+    height: 0;
+}
+::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
 }
