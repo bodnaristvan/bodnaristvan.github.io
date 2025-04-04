@@ -96,6 +96,11 @@ section.index {
         align-self: center;
     }
 
+    article .titlelink {
+        text-decoration: none;
+        color: inherit;
+    }
+
     article .creationdate {
         align-self: end;
     }
