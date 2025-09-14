@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duck Grid</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f9f9f9;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            width: 60vw;
+            aspect-ratio: 1 / 1;
+            gap: 2vw;
+            background: #fff;
+            border-radius: 1vw;
+        }
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14vw;
+            background: #e0f7fa;
+            border-radius: 0.5vw;
+            transition: background 0.2s;
+        }
+        .cell:hover {
+            background: #b2ebf2;
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                width: 90vw;
+            }
+            .cell {
+                font-size: 20vw;
+            }
+        }
+
+
+        .banner {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            color: #fff;
+            padding: 2vw 6vw;
+            font-size: 3vw;
+            border-radius: 1vw;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transition: transform 0.4s cubic-bezier(.68,-0.55,.27,1.55), opacity 0.2s;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #successBanner {
+            background: #4caf50;
+            color: #fff;
+        }
+
+        #failureBanner {
+            background: #f44336;
+            color: #fff;
+        }
+
+        .wrapper {
+            display: block;
+        }
+
+        #streak-container {
+            width: 100%;
+            margin-top: 2em;
+            font-size: 4vw;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="grid" id="duckGrid"></div>
+        <div id="streak-container">
+        Pontszám: <span id="streak">0</span>
+        </div>
+    </div>
+    <div class="banner" id="successBanner">Siker!</div>
+    <div class="banner" id="failureBanner">Béna 😝</div>
+    <script src="main.js"></script>
+</body>
+</html>
