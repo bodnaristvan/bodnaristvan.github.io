@@ -55,6 +55,7 @@ section.gallery {
     article img {
         max-width: 96vw;
         max-height: 96svh;
+        width: auto;
         margin: 2svh 2vw;
         object-fit: contain;
         box-sizing: border-box;
@@ -115,6 +116,7 @@ section.index {
         max-width: 100%;
         /* max-height: 100%; */
         max-height: 80vh;
+        width: auto;
         margin: 2svh 0;
         object-fit: contain;
         box-sizing: border-box;
