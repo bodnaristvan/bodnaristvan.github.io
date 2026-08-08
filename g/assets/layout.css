@@ -3,7 +3,6 @@ html.verticalsnapping {
     scroll-snap-type: y proximity;
     overflow-y: scroll;
     scroll-snap-align: center;
-    /* height: 100vh; */
 }
 body {
     margin: 0;
@@ -20,9 +19,7 @@ body {
 
 header.page-header {
     scroll-snap-align: start;
-    /* height: 20svh; */
     align-content: end;
-    /* padding: 3lvh 8vw; */
     margin: 2em;
 
     h1 {
@@ -30,12 +27,6 @@ header.page-header {
         margin: 0;
         line-height: 0.7em;
     }
-}
-
-footer.page-footer {
-    scroll-snap-align: start;
-    /* height: 20lvh; */
-    padding: 3lvh 8vw;
 }
 
 section.gallery {
@@ -51,7 +42,7 @@ section.gallery {
         display: flex;
         align-self: center;
     }
-    
+
     article img {
         max-width: 96vw;
         max-height: 96svh;
@@ -69,10 +60,10 @@ section.gallery {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        
+
         box-sizing: border-box;
     }
-    
+
 }
 
 section.index {
@@ -102,10 +93,6 @@ section.index {
         color: inherit;
     }
 
-    article .creationdate {
-        align-self: end;
-    }
-
     article .textwidth {
         width: 100%;
         max-width: 800px;
@@ -114,7 +101,6 @@ section.index {
 
     article img {
         max-width: 100%;
-        /* max-height: 100%; */
         max-height: 80vh;
         width: auto;
         margin: 2svh 0;
@@ -137,25 +123,6 @@ section.index {
     .separator {
         text-align: center;
         color: #363636;
-    }
-}
-
-/* full screen button */
-#fs-button {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    opacity: 0.5;
-}
-:-webkit-full-screen {
-    #fs-button {
-        display: none;
-    }
-}
-/* disable button on ios safari, because it doesn't work */
-@supports (-webkit-touch-callout: none) {
-    #fs-button {
-        display: none;
     }
 }
 
